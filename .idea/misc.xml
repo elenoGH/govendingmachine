@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/eleno/Documents/workspace-eleno/front/android/govendingmachine/app/src/main/res/layout/activity_fullscreen.xml" value="0.25" />
+        <entry key="..\:/Users/eleno/Documents/workspace-eleno/front/android/govendingmachine/app/src/main/res/layout/activity_main.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/eleno/Documents/workspace-eleno/front/android/govendingmachine/app/src/main/res/layout/child_item.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/eleno/Documents/workspace-eleno/front/android/govendingmachine/app/src/main/res/layout/parent_item.xml" value="0.20512820512820512" />
+        <entry key="..\:/Users/eleno/Documents/workspace-eleno/front/android/govendingmachine/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.12" />
       </map>
     </option>
   </component>
