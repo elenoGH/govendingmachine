@@ -9,9 +9,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowInsets;
 import com.mku.govendingmachine.databinding.ActivityFullscreenBinding;
 import android.util.Log;
+import android.view.WindowManager;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -43,10 +45,19 @@ public class FullscreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        /*View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);*/
+
         super.onCreate(savedInstanceState);
 
-     binding = ActivityFullscreenBinding.inflate(getLayoutInflater());
-     setContentView(binding.getRoot());
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        binding = ActivityFullscreenBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         mVisible = true;
         mControlsView = binding.fullscreenContentControls;
@@ -63,11 +74,13 @@ public class FullscreenActivity extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        //binding.dummyButton.setOnTouchListener(mDelayHideTouchListener);
+        binding.dummyButton.setOnTouchListener(mDelayHideTouchListener);
     }
 
+    //aqui se ejecuta el ocultar las barras del telefono y acciones que se pusieron en la pantalla como el boton
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
+        Log.i("Action: ", "onPostCreate");
         super.onPostCreate(savedInstanceState);
 
         // Trigger the initial hide() shortly after the activity has been
@@ -84,6 +97,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Log.i("Action: ", "OnTouchListener");
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     if (AUTO_HIDE) {
@@ -120,13 +134,14 @@ public class FullscreenActivity extends AppCompatActivity {
 
         // Schedule a runnable to remove the status and navigation bar after a delay
         mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);//ejecusion de proceso en sierto tiempo
     }
 
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
         public void run() {
+            Log.i("Action: ", "mHidePart2Runnable");
             // Delayed removal of status and navigation bar
             if (Build.VERSION.SDK_INT >= 30) {
                 mContentView.getWindowInsetsController().hide(
@@ -146,22 +161,26 @@ public class FullscreenActivity extends AppCompatActivity {
     };
 
     private void show() {
-        ActionBar actionBar = getSupportActionBar();
-        Log.i("Action: ", "SHOW");
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-        mControlsView.setVisibility(View.GONE);
-        mVisible = false;
+        //la siguiente accion comentada, hace que cundo se de click en la pantalla
+        //muestre de nuevo la barra de acciones del telefono
+        /*if (Build.VERSION.SDK_INT >= 30) {
+            mContentView.getWindowInsetsController().show(
+                    WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
+        } else {
+            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        }*/
+        mVisible = true;
 
-        // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+        // Schedule a runnable to display UI elements after a delay
+        mHideHandler.removeCallbacks(mHidePart2Runnable);
+        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
+            Log.i("Action: ", "mShowPart2Runnable");
             // Delayed display of UI elements
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
@@ -175,6 +194,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
+            Log.i("Action: ", "mHideRunnable");
             hide();
         }
     };
@@ -184,6 +204,7 @@ public class FullscreenActivity extends AppCompatActivity {
      * previously scheduled calls.
      */
     private void delayedHide(int delayMillis) {
+        Log.i("Action: ", "delayedHide");
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
