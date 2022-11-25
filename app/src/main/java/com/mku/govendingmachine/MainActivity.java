@@ -16,7 +16,6 @@ import android.view.WindowManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mku.govendingmachine.databinding.ActivityFullscreenBinding;
 import com.mku.govendingmachine.databinding.ActivityMainBinding;
 import com.mku.govendingmachine.entity.ChildItem;
 import com.mku.govendingmachine.entity.ParentItem;
@@ -42,15 +41,12 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mVisible = true;
         mContentView = binding.parentRecyclerview;
-        RecyclerView
-                ParentRecyclerViewItem
-                = findViewById(
-                R.id.parent_recyclerview);
+        RecyclerView ParentRecyclerViewItem = findViewById(R.id.parent_recyclerview);
 
         // Initialise the Linear layout manager
         LinearLayoutManager
@@ -70,16 +66,13 @@ public class MainActivity extends AppCompatActivity {
         // Set the layout manager
         // and adapter for items
         // of the parent recyclerview
-        ParentRecyclerViewItem
-                .setAdapter(parentItemAdapter);
-        ParentRecyclerViewItem
-                .setLayoutManager(layoutManager);
+        ParentRecyclerViewItem.setAdapter(parentItemAdapter);
+        ParentRecyclerViewItem.setLayoutManager(layoutManager);
     }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         Log.i("Action: ", "onPostCreate");
         super.onPostCreate(savedInstanceState);
-
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
@@ -87,30 +80,15 @@ public class MainActivity extends AppCompatActivity {
     }
     private List<ParentItem> ParentItemList()
     {
-        List<ParentItem> itemList
-                = new ArrayList<>();
-
-        ParentItem item
-                = new ParentItem(
-                "Title 1",
-                ChildItemList());
+        List<ParentItem> itemList = new ArrayList<>();
+        ParentItem item = new ParentItem("Title 1", ChildItemList());
         itemList.add(item);
-        ParentItem item1
-                = new ParentItem(
-                "Title 2",
-                ChildItemList());
+        ParentItem item1 = new ParentItem("Title 2", ChildItemList());
         itemList.add(item1);
-        ParentItem item2
-                = new ParentItem(
-                "Title 3",
-                ChildItemList());
+        ParentItem item2 = new ParentItem("Title 3", ChildItemList());
         itemList.add(item2);
-        ParentItem item3
-                = new ParentItem(
-                "Title 4",
-                ChildItemList());
+        ParentItem item3 = new ParentItem("Title 4", ChildItemList());
         itemList.add(item3);
-
         return itemList;
     }
 
@@ -119,14 +97,11 @@ public class MainActivity extends AppCompatActivity {
     // of child RecyclerView
     private List<ChildItem> ChildItemList()
     {
-        List<ChildItem> ChildItemList
-                = new ArrayList<>();
-
+        List<ChildItem> ChildItemList = new ArrayList<>();
         ChildItemList.add(new ChildItem("Card 1"));
         ChildItemList.add(new ChildItem("Card 2"));
         ChildItemList.add(new ChildItem("Card 3"));
         ChildItemList.add(new ChildItem("Card 4"));
-
         return ChildItemList;
     }
     /**
